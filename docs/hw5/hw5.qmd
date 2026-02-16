@@ -1,0 +1,77 @@
+---
+title: "HW5"
+format: html
+output-file: "index"
+---
+Assignment 2
+
+![This is an elephant.](https://quarto.org/docs/authoring/elephant.png){width=40%}
+
+
+Assignment 3 Excercise 1
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+  },
+  "width": 1000,
+  "height": 300,
+  "mark": {"type": "line", "point": false},
+  "transform": [],
+  "encoding": {
+    "x": {
+      "field": "date",
+      "timeUnit": "monthdate",
+      "type": "temporal",
+      "title": "Day of Year"
+    },
+    "y": {
+      "field": "temp_max",
+      "type": "quantitative",
+      "title": "Temperature in Seattle"
+    },
+    "color": {
+      "field": "year",
+      "type": "nominal",
+      "title": "Year"
+    }
+  }
+}' |> as_vegaspec()
+```
+
+Assignment 3 Excercise 3
+```{r}
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+  },
+  "width": 800,
+  "height": 400,
+  "mark": {"type": "point", "filled": true, "size": 100},
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "title": "Month",
+      "sort": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Number of Days"
+    },
+    "color": {
+      "field": "weather",
+      "type": "nominal",
+      "title": "Weather Type"
+    }
+  }
+}' |> as_vegaspec()
+```
+
+
