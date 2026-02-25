@@ -7,3 +7,5 @@ embed-resources: true
 ---
 [HW 5](hw5/)
 
+[HW 6](hw6/)
+

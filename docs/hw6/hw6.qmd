@@ -1,0 +1,98 @@
+---
+title: "HW6"
+format: html
+output-file: "index"
+---
+Exercise 1
+1 a. Something that stuck with me from the Tuf Reading is that a bad data set cannot be rescued by calculation, or by a fancy graphic.
+
+b. - My graphic was on pg 31. ![The graph](https://r.stem.calvin.edu/s/3e5decfc78a31c404973f/files/data304/data304-spring2026/docs/hw6/hw6_files/[TEC%20TUF]%20the%20visual%20display%20of%20quantitative%20information.pdf%20-%20Google%20Chrome%202_24_2026%204_37_07%20PM.png)
+- I chose this graph because it is a very clever and informative idea, but seems abstract at first glance. 
+- The horizontal line represents Arrivals and departures, the length of the horizontal line represents the length of  a stop at a station. The slope of the line show the speed of the train. 
+-The intersection of a line shows the time and place of a train going opposite direction.
+Most likely the overlapping lines would much hard to compute in Vega lite. 
+- On this graph Tufte was trying to illustrate the strength of a time series graph. After telling us about this graph they decided to share on how it was able to benefit the audience at that time. Reducing unnecessary traveling hours.
+
+Excercise 2 
+-  There are certain attributes that catch people's attention when included in graphs and can cause people to remember your information fast. If we add these preattentive attributes they can help deliver the information we want our audience to see before they realize it.
+
+Exercise 3 on 2.13
+1. - The first thing that is wrong about the graph is the use of 2 y axes at the same time which makes it challenging to understand the trend for each mark.
+
+-The second thing is the cluster of information. The presence of visualization attempting to give similar information makes it hard on the audience's eyes as the represented information could be done simpler.
+
+-The completion rate scale starts at 50 percent. It doesn’t show the full picture.
+
+2 - I would use two different line graphs to convey the completion rate and the response rate.
+
+- I would have only one x axis to show the rate, and would start from 0.
+
+- Then I would the quarters in order to show comparisons between each quarter of the year.
+x 
+
+3.
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": " Completion and Response Rates Over Time",
+  "width": 600,
+  "height": 400,
+"data":
+    { "values" :
+        [{"Date":"Q1-2017","Completion Rate":0.91,"Response Rate":0.023},
+        {"Date":"Q2-2017","Completion Rate":0.93,"Response Rate":0.018},
+        {"Date":"Q3-2017","Completion Rate":0.91,"Response Rate":0.028},
+        {"Date":"Q4-2017","Completion Rate":0.89,"Response Rate":0.023},
+        {"Date":"Q1-2018","Completion Rate":0.84,"Response Rate":0.034},
+        {"Date":"Q2-2018","Completion Rate":0.88,"Response Rate":0.027},
+        {"Date":"Q3-2018","Completion Rate":0.91,"Response Rate":0.026},
+        {"Date":"Q4-2018","Completion Rate":0.87,"Response Rate":0.039},
+        {"Date":"Q1-2019","Completion Rate":0.83,"Response Rate":0.028}] 
+    },
+  "transform": [
+    {"fold": ["Completion Rate", "Response Rate"], "as": ["Metric", "Value"]}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {
+          "field": "Date",
+          "type": "ordinal",
+          "title": "Quarter"
+        },
+        "y": {
+          "field": "Value",
+          "type": "quantitative",
+          "title": "Rate"
+        },
+        "color": {
+          "field": "Metric",
+          "type": "nominal",
+          "title": "Metric Type"
+        }
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -10},
+      "encoding": {
+        "x": {"field": "Date", "type": "ordinal"},
+        "y": {"field": "Value", "type": "quantitative"},
+        "text": {"field": "Value", "type": "quantitative", "format": ".2f"},
+        "color": {"field": "Metric", "type": "nominal"}
+      }
+    }
+  ]
+}' |> as_vegaspec()
+```
+
+Excercise 3b. I was more captivated with the time series designs, though I didn’t think abstract but I thought of implementing something that could as well be effective and intelligent.
+
+
+
+
+
+
+
