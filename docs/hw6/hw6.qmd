@@ -6,7 +6,7 @@ output-file: "index"
 Exercise 1
 1 a. Something that stuck with me from the Tuf Reading is that a bad data set cannot be rescued by calculation, or by a fancy graphic.
 
-b. - My graphic was on pg 31. ![The graph](https://r.stem.calvin.edu/s/3e5decfc78a31c404973f/files/data304/data304-spring2026/docs/hw6/hw6_files/[TEC%20TUF]%20the%20visual%20display%20of%20quantitative%20information.pdf%20-%20Google%20Chrome%202_24_2026%204_37_07%20PM.png)
+b. - My graphic was on pg 31. ![The graph](the graph.png){width=70%}
 
 - I chose this graph because it is a very clever and informative idea, but seems abstract at first glance. 
 - The horizontal line represents Arrivals and departures, the length of the horizontal line represents the length of  a stop at a station. The slope of the line show the speed of the train. 
