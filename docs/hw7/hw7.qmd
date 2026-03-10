@@ -1,0 +1,335 @@
+---
+title: "HW7"
+format: html
+output-file: "index"
+---
+
+Exercise 1 
+
+a.The first advice I took from Wilke is that the order in which we arrange bar charts matter. He says this because the manner we arrange bar charts depends on the context of its usage.
+
+b.It is advised not to use bar charts when dealing with data sets that have axis that cannot start at zero which in contrast with a bar chart would require that the bar length be proportional to that amount shown. 
+
+c.The alternatives to bars mentioned here are Dot plots and heat maps.
+
+d.Wilke stated that stack bars are needed when the sum of the amounts represented by each stacked bars is in itself a meaningful amount. 
+
+e. 6.3
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/cow-movies.csv"
+  },
+    "width": 500,
+  "height": 250,
+  "layer": [
+    {
+      "mark": {"type": "bar", "color": "blue"},
+      "encoding": {
+        "y": {
+          "field": "title_short",
+          "type": "nominal",
+          "sort": {"field": "rank", "order": "ascending"},
+          "axis": {"title": null}
+        },
+        "x": {
+          "field": "amount",
+          "type": "quantitative",
+          "axis": {
+            "title": "weekend gross (million USD)",
+            "labelExpr": "datum.value / 1000000",
+            "values": [0, 20000000, 40000000, 60000000, 80000000],
+            "titleFontSize": 13
+          },
+          "scale": {"domain": [0, 80000000]}
+        }
+      }
+    }
+
+  ]
+}
+' |> as_vegaspec()
+```
+
+f. 6.8
+```{r}
+my_spec <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(url = "https://calvin-data304.netlify.app/data/cow-income.csv"),
+  width = 550,
+  height = 300,
+  transform = list(
+    list(filter = "datum.race == 'asian' || datum.race == 'white' || datum.race == 'hispanic' || datum.race == 'black'")
+  ),
+  mark = list(type = "bar"),
+  encoding = list(
+    x = list(
+      field = "race",
+      type = "nominal",
+      sort = list("asian", "white", "hispanic", "black"),
+      axis = list(title = NULL, labelFontSize = 13)
+    ),
+    xOffset = list(
+      field = "age",
+      type = "nominal",
+      sort = list("15 to 24", "25 to 34", "35 to 44", "45 to 54", "55 to 64", "65 to 74", "> 74")
+    ),
+    y = list(
+      field = "median_income",
+      type = "quantitative",
+      axis = list(
+        title = "median income (USD)",
+        values = list(0, 20000, 40000, 60000, 80000, 100000),
+        grid = TRUE
+      ),
+      scale = list(domain = list(0, 100000))
+    ),
+    color = list(
+      field = "age",
+      type = "ordinal",
+      sort = list("15 to 24", "25 to 34", "35 to 44", "45 to 54", "55 to 64", "65 to 74", "> 74"),
+      legend = list(title = "age (yrs)")
+    )
+  )
+)
+
+my_spec |> as_vegaspec()
+```
+
+6.9
+```{r}
+my_spec <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(url = "https://calvin-data304.netlify.app/data/cow-income.csv"),
+  width = 200,
+  height = 150,
+  transform = list(
+    list(filter = "datum.race == 'asian' || datum.race == 'white' || datum.race == 'hispanic' || datum.race == 'black'")
+  ),
+  mark = list(type = "bar"),
+  encoding = list(
+    facet = list(
+      field = "race",
+      type = "nominal",
+      columns = 2,
+      sort = list("asian", "white", "hispanic", "black"),
+      header = list(title = NULL, labelFontSize = 13)
+    ),
+    x = list(
+      field = "age",
+      type = "nominal",
+      sort = list("15 to 24", "25 to 34", "35 to 44", "45 to 54", "55 to 64", "65 to 74", "> 74"),
+      axis = list(title = "age (years)", labelFontSize = 10)
+    ),
+    y = list(
+      field = "median_income",
+      type = "quantitative",
+      axis = list(
+        title = "median income (USD)",
+        values = list(0, 20000, 40000, 60000, 80000, 100000),
+        grid = TRUE
+      ),
+      scale = list(domain = list(0, 100000))
+    ),
+    color = list(value = "#7ec8e3")
+  )
+)
+
+
+my_spec |> as_vegaspec()
+```
+
+g.6.11
+```{r}
+my_spec <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(url = "https://calvin-data304.netlify.app/data/cow-gapminder.csv"),
+  transform = list(
+    list(filter = "datum.continent == 'Americas'"),
+    list(filter = "datum.year == 2007")
+  ),
+  width = 400,
+  height = 550,
+  mark = list(type = "point", filled = TRUE, color = "#2e75b6", size = 80),
+  encoding = list(
+    y = list(
+      field = "country",
+      type = "nominal",
+      sort = list(field = "lifeExp", order = "descending"),
+      axis = list(
+        title = NULL,
+        labelFontSize = 12,
+        ticks = FALSE,
+        domain = FALSE,
+        grid = TRUE,
+        gridColor = "#cccccc",
+        gridWidth = 1
+      )
+    ),
+    x = list(
+      field = "lifeExp",
+      type = "quantitative",
+      scale = list(domain = list(60, 82)),
+      axis = list(
+        title = "life expectancy (years)",
+        titleFontSize = 13,
+        grid = TRUE,
+        gridColor = "#cccccc",
+        gridWidth = 1,
+        tickCount = 5,
+        domain = FALSE,
+        ticks = FALSE
+      )
+    )
+  )
+)
+
+my_spec |> as_vegaspec()
+```
+-In the figure 6.12, the data set used wasn't suitable with bars because they drew attention from the key feature of the data which was the differences in life expectancy among the different countries.
+
+-Where as in 6.13 attempting to order countries alphabetically caused to end up with a disordered points which is confusing and doesn't convey a clear message.
+
+Exercise 2
+b.
+  -The end goal is for the audience to be able to decode our chosen marks to accurately understand the original data. And the better this is done the better our visualization.
+  
+  -Avoiding adding unnecessary elements that distract from the data. He emphasized simplification.
+  
+  -He let us know that humans have their limitation in interpreting visualiations. So having it in mind is necessary to be able to produce an effective visualization.
+  
+c. The two graphs he referenced from Tufte were the life expectancy chart and Charles Minard's map of Napoleon's retreat from Moscow.
+
+Excercise 3
+a. In vega lite we have a heat map when we have a mark type and encoding channels.
+
+b.
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "config": {
+  "mark": {"invalid": null},
+  "scale": {"invalid": "#eaeaea"} 
+},
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/cow-internet2.csv"
+  },
+  "transform": [
+    {"filter": "datum.year >= 1993 && datum.year <= 2017"},
+    {"calculate": "datum.users == null || isNaN(datum.users) ? 0 : datum.users", "as": "users_clean"}
+  ],
+  "width": 600,
+  "height": 400,
+  "mark": {"type": "rect", "stroke": "white", "strokeWidth": 1},
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "values": [1995, 2000, 2005, 2010, 2015],
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "sort": [
+        "Iceland", "Norway", "United States", "Canada", "New Zealand",
+        "United Kingdom", "Japan", "Germany", "Israel", "Italy",
+        "France", "Chile", "Brazil", "Argentina", "Mexico",
+        "China", "South Africa", "Algeria", "India", "Kenya"
+      ],
+      "axis": {
+        "title": null,
+        "labelAlign": "left",
+        "labelPadding": 5,
+        "ticks": false,
+        "domain": false,
+        "orient": "right"
+      }
+    },
+    "color": {
+      "field": "users_clean",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 100],
+        "range": ["#0a0320", "#6b1f6e", "#c5407e", "#f4a460", "#fdf0c2"]
+      },
+      "legend": {
+        "title": "internet users / 100 people",
+        "titleAlign": "center",
+        "orient": "top",
+        "direction": "horizontal",
+        "gradientLength": 300,
+        "values": [0, 25, 50, 75, 100]
+      }
+    }
+  }
+}
+' |> as_vegaspec()
+```
+
+c. Healy presents a possible problem with heat maps relating to visual perception which he calls the Mach band effect He says it becomes relatively difficult to decode squares to the nearness to its neighbors.
+
+d. In the case of the show pony Healy said that viewers would focus on the larger pattern shown instead of decoding the very small details.
+
+Excercise 4.
+a. Dr. Healy advises against using pie charts, he described them as perceptually bad and explained that the human visual system is better at decoding lengths from a fixed baseline than decoding angles.
+
+b. Wilke argues that piecharts are better at showing how parts combine to form a majority or whole which other forms of visualization are limited in doing.
+
+c. Wilke presented side-by-side bars and stacked bars as alternatives to pie charts. He prefers side-by-side bars when the goal is to directly compare the individual fractions to each other. On the other hand, he favors stacked bars for visualizing many sets of proportions or time series of proportions, as they clearly show the proportions of a whole while allowing for comparisons across different conditions. 
+
+d.
+```{r}
+my_spec <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(values = list(
+    list(party = "CDU/CSU", seats = 243),
+    list(party = "SPD",     seats = 214),
+    list(party = "FDP",     seats = 39)
+  )),
+  layer = list(
+    list(
+      mark = list(type = "arc", outerRadius = 150, stroke = "white", strokeWidth = 3),
+      encoding = list(
+        theta = list(field = "seats", type = "quantitative", stack = TRUE),
+        color = list(
+          field = "party",
+          type = "nominal",
+          scale = list(
+            domain = list("CDU/CSU", "SPD", "FDP"),
+            range  = list("#555555", "#a63030", "#e8d44d")
+          ),
+          legend = NULL
+        )
+      )
+    ),
+    list(
+      mark = list(type = "text", radius = 100, fontSize = 16, fontWeight = "bold", color = "white"),
+      encoding = list(
+        theta = list(field = "seats", type = "quantitative", stack = TRUE),
+        text = list(field = "seats", type = "quantitative")
+      )
+    ),
+    list(
+      mark = list(type = "text", radius = 175, fontSize = 13),
+      encoding = list(
+        theta = list(field = "seats", type = "quantitative", stack = TRUE),
+        text = list(field = "party", type = "nominal")
+      )
+    )
+  )
+)
+
+my_spec |> as_vegaspec()
+```
+
+
