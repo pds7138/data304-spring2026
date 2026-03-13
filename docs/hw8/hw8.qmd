@@ -1,0 +1,326 @@
+---
+title: "HW8"
+format: html
+output-file: "index"
+---
+
+Exercise 1
+a.
+
+```{r}
+library(vegawidget)
+chart1 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  transform = list(list(fold=list("demand","capacity"), as=list("variable","value"))),
+  mark = list(type="bar"),
+  encoding = list(
+    x = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+    y = list(field="value", type="quantitative",
+                   scale=list(domain=list(0, 55000)),
+                   axis=list(title=NULL, format="~s")),
+    xOffset = list(field="variable", type="nominal"),
+    color = list(
+      field="variable", type="nominal",
+      scale=list(domain=list("demand","capacity"), range=list("#a8c8e8","#2e5f8a")),
+      legend=list(title=NULL, orient="top-right")
+    )
+  )
+)
+chart1 |> as_vegaspec()
+
+```
+b.
+```{r}
+chart2 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  transform = list(list(fold=list("demand","capacity"), as=list("variable","value"))),
+  mark = list(type="line"),
+  encoding = list(
+    x     = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+    y     = list(field="value", type="quantitative",
+                 scale=list(domain=list(0, 55000)),
+                 axis=list(title=NULL, format="~s")),
+    color = list(
+      field="variable", type="nominal",
+      scale=list(domain=list("demand","capacity"), range=list("#a8c8e8","#2e5f8a")),
+      legend=list(title=NULL, orient="top-right")
+    )
+  )
+)
+chart2 |> as_vegaspec()
+```
+
+c.
+```{r}
+chart3 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  layer = list(
+    list(
+      mark = list(type="bar", color="#2e5f8a"),
+      encoding = list(
+        x = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+        y = list(field="capacity", type="quantitative",
+                 scale=list(domain=list(0, 55000)),
+                 axis=list(title=NULL, format="~s"))
+      )
+    ),
+    list(
+      mark = list(type="bar", color="#a8c8e8", width=8),
+      encoding = list(
+        x = list(field="date", type="ordinal"),
+        y = list(field="demand", type="quantitative")
+      )
+    )
+  )
+)
+chart3 |> as_vegaspec()
+```
+
+d.
+```{r}
+chart4 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  transform = list(
+    list(calculate="datum.demand - datum.capacity", as="unmet")
+  ),
+  layer = list(
+    list(
+      mark = list(type="bar", color="#a8c8e8"),
+      encoding = list(
+        x = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+        y = list(field="capacity", type="quantitative",
+                 scale=list(domain=list(0, 55000)),
+                 axis=list(title=NULL, format="~s"))
+      )
+    ),
+    list(
+      mark = list(type="bar", color="#2e5f8a"),
+      encoding = list(
+        x  = list(field="date",    type="ordinal"),
+        y  = list(field="demand",  type="quantitative"),
+        y2 = list(field="capacity")
+      )
+    )
+  )
+)
+chart4 |> as_vegaspec()
+```
+
+e.
+```{r}
+chart5 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  layer = list(
+    list(
+      mark = list(type="rule", color="#aaaaaa"),
+      encoding = list(
+        x  = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+        y  = list(field="capacity", type="quantitative",
+                  scale=list(domain=list(0, 55000)),
+                  axis=list(title=NULL, format="~s")),
+        y2 = list(field="demand")
+      )
+    ),
+    list(
+      mark = list(type="point", filled=FALSE, size=80, strokeWidth=2),
+      encoding = list(
+        x     = list(field="date",   type="ordinal"),
+        y     = list(field="demand", type="quantitative"),
+        color = list(value="#a8c8e8")
+      )
+    ),
+    list(
+      mark = list(type="point", filled=TRUE, size=80),
+      encoding = list(
+        x     = list(field="date",     type="ordinal"),
+        y     = list(field="capacity", type="quantitative"),
+        color = list(value="#2e5f8a")
+      )
+    )
+  )
+)
+chart5 |> as_vegaspec()
+```
+
+f.
+```{r}
+chart6 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  width = 300, height = 150,
+  data = list(url = "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.json"),
+  transform = list(
+    list(calculate="datum.demand - datum.capacity", as="unmet")
+  ),
+  mark = list(type="line", point=list(filled=TRUE, size=50), color="#2e5f8a"),
+  encoding = list(
+    x = list(field="date", type="ordinal", axis=list(title=NULL, labelAngle=-45)),
+    y = list(field="unmet", type="quantitative",
+             scale=list(domain=list(0, 30000)),
+             axis=list(title="Unmet Demand", format="~s"))
+  )
+)
+chart6 |> as_vegaspec()
+```
+
+Exercise 2
+a. b.
+```{r}
+part_a <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  title = "Sum of perc by year and sex",
+  data = list(url = "https://cdn.jsdelivr.net/npm/vega-datasets@2.8.0/data/jobs.json"),
+  width = 400, height = 200,
+  mark = list(type="line", point=TRUE),
+  encoding = list(
+    x     = list(field="year", type="ordinal", axis=list(title="Year")),
+    y     = list(aggregate="sum", field="perc", type="quantitative",
+                 axis=list(title="Sum of perc", format=".0%")),
+    color = list(field="sex", type="nominal", legend=list(title="Sex"))
+  )
+)
+part_a |> as_vegaspec()
+```
+
+- The sum of perc for men is close to 100% each year which is same for women neans that the fraction of the total workforce (men + women combined) working in each job in that year. It is NOT the fraction within each sex. Which tells us that mens values sum to about 50-60% and women's to roughly 40-50%, together summing to ~100%.
+
+b.
+```{r}
+part_b <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  title = list(
+    text = "Percent of people working various jobs",
+    subtitle = "Each dot represents one occupation. Hover to see which occupation it is."
+  ),
+  data = list(url = "https://cdn.jsdelivr.net/npm/vega-datasets@2.8.0/data/jobs.json"),
+  transform = list(
+    list(filter = "datum.year == 1850 || datum.year == 1900 || datum.year == 1950 || datum.year == 2000"),
+    list(pivot = "sex", groupby = list("job", "year"), value = "perc")
+  ),
+  width = 150, height = 150,
+  mark = list(type="point", filled=FALSE, opacity=0.7, color="#4a90d9"),
+  encoding = list(
+    facet = list(field="year", type="ordinal", columns=2, title="Year"),
+    x = list(
+      field="men", type="quantitative",
+      scale=list(type="symlog", constant=0.00001),
+      axis=list(title="men", format=".0%")
+    ),
+    y = list(
+      field="women", type="quantitative",
+      scale=list(type="symlog", constant=0.00001),
+      axis=list(title="women", format=".0%")
+    ),
+    tooltip = list(
+      list(field="job",   type="nominal"),
+      list(field="year",  type="ordinal"),
+      list(field="men",   type="quantitative", format=".2%"),
+      list(field="women", type="quantitative", format=".2%")
+    )
+  )
+)
+part_b |> as_vegaspec()
+```
+
+c.
+```{r}
+part_c <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  title = list(
+    text = "Percentage of men/women working various jobs",
+    subtitle = "Each dot represents one occupation. Hover to see which occupation it is."
+  ),
+  data = list(url = "https://cdn.jsdelivr.net/npm/vega-datasets@2.8.0/data/jobs.json"),
+  transform = list(
+    list(
+      joinaggregate = list(list(op="sum", field="count", as="total_by_sex_year")),
+      groupby = list("sex", "year")
+    ),
+    list(calculate = "datum.count / datum.total_by_sex_year", as = "perc_within_sex"),
+    list(filter = "datum.year == 1850 || datum.year == 1900 || datum.year == 1950 || datum.year == 2000"),
+    list(pivot = "sex", groupby = list("job", "year"), value = "perc_within_sex")
+  ),
+  width = 150, height = 150,
+  mark = list(type="point", filled=FALSE, opacity=0.7, color="#4a90d9"),
+  encoding = list(
+    facet = list(field="year", type="ordinal", columns=2, title="Year"),
+    x = list(
+      field="men", type="quantitative",
+      scale=list(type="symlog", constant=0.00001),
+      axis=list(title="% of men", format=".0%")
+    ),
+    y = list(
+      field="women", type="quantitative",
+      scale=list(type="symlog", constant=0.00001),
+      axis=list(title="% of women", format=".0%")
+    ),
+    tooltip = list(
+      list(field="job",   type="nominal"),
+      list(field="year",  type="ordinal"),
+      list(field="men",   type="quantitative", format=".2%"),
+      list(field="women", type="quantitative", format=".2%")
+    )
+  )
+)
+part_c |> as_vegaspec()
+```
+
+Exercise 3
+```{r}
+graphic2 <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  title = "Highest and Lowest Gas Prices in 2016 (USD per gallon)",
+  data = list(url = "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"),
+  transform = list(
+    list(
+      lookup = "name",
+      from = list(
+        data = list(url = "https://calvin-data304.netlify.app/data/pump_price_for_gasoline_us_per_liter.csv"),
+        key = "country",
+        fields = list("2016")
+      )
+    ),
+    list(filter = "datum['2016'] != null"),
+    list(calculate = "datum['2016'] * 3.785", as = "price_per_gallon"),
+    list(
+      window = list(list(op="rank", as="rank")),
+      sort   = list(list(field="price_per_gallon", order="descending"))
+    ),
+    list(filter = "datum.rank <= 15 || datum.rank > 149")
+  ),
+  width = 400,
+  height = 500,
+  mark = list(type="bar"),
+  encoding = list(
+    y = list(
+      field="alpha-3", type="nominal",
+      sort=list(field="price_per_gallon", order="descending"),
+      axis=list(title=NULL, labelFontSize=11)
+    ),
+    x = list(
+      field="price_per_gallon", type="quantitative",
+      axis=list(title="USD per gallon", format="$.2f")
+    ),
+    color = list(field="region", type="nominal", legend=list(title="Region")),
+    tooltip = list(
+      list(field="name",            type="nominal",      title="Country"),
+      list(field="region",          type="nominal"),
+      list(field="sub-region",      type="nominal",      title="Subregion"),
+      list(field="price_per_gallon",type="quantitative", format="$.2f", title="Price/gallon")
+    )
+  )
+)
+graphic2 |> as_vegaspec()
+```
+
+- Yes there were a few countries that couldn't be joined. For example Cote d voir
+
