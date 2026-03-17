@@ -1,0 +1,454 @@
+---
+title: "Final portfolio"
+format: 
+  html:
+    code-tools: true
+    code-fold: true
+    
+output-file: "index"
+---
+
+Exercise 1
+
+a.
+I prefer to go with simple but efficient graphs, under genetic kits I will go with graph one  titled comparing twins. This graph in particular strongly attempts to tell the ideal story we were attempting to, which was to compare genetic shares across the twins from different companies. Though I would say it has its limitations for example it doesn't tell us detailed information from the data set. Looking past its limitations I would argue that this graph can be used for the public at large which would include both the literate and vice versa.
+
+b.
+Under genetic kits I will say I have concerns towards the graph 8 comparing twins. One thing that was highlighted through my learn process is that Efficiency = Communication of Idea. I did try to understand the perspective the author could be could be coming from. At the latter end I validated this graph with something I learned from the youtube video and that immediately a person glances at a graph there is a story that should be told, but also humans dont all have the same understanding. So for this graph I would say that the author had a reason to their perspective but as an audience I don't think the graph completes its efficiency.
+
+c. 
+1st Graph
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Twin Pair Genetic Share by Kit", "anchor": "middle"},
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/twins-genetics-long.json"
+  },
+  "params": [
+    {
+      "name": "kitSelection",
+      "value": "Ancestry",
+      "bind": {
+        "input": "radio",
+        "options": ["Ancestry", "23andMe", "MyHeritage"],
+        "name": "Select Kit: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.kit == kitSelection"}
+  ],
+  "facet": {
+    "field": "pair",
+    "type": "ordinal",
+    "title": "Twin Pair",
+    "columns": 6
+  },
+  "spec": {
+    "width": 80,
+    "height": 300,
+    "mark": {"type": "bar"},
+    "encoding": {
+      "x": {
+        "field": "id",
+        "type": "nominal",
+        "title": "Twin",
+        "sort": ["A", "B"]
+      },
+      "y": {
+        "field": "genetic share",
+        "type": "quantitative",
+        "title": "Genetic Share",
+        "scale": {"domain": [0, 1]},
+        "axis": {"format": "%"}
+      },
+      "xOffset": {
+        "field": "region",
+        "type": "nominal"
+      },
+      "color": {
+        "field": "region",
+        "type": "nominal",
+        "title": "Region",
+        "scale": {"scheme": "tableau10"}
+      },
+      "tooltip": [
+        {"field": "pair", "type": "ordinal", "title": "Pair"},
+        {"field": "id", "type": "nominal", "title": "Twin"},
+        {"field": "kit", "type": "nominal", "title": "Kit"},
+        {"field": "region", "type": "nominal"},
+        {"field": "genetic share", "type": "quantitative", "format": ".1%", "title": "Share"}
+      ]
+    }
+  }
+}
+' |> as_vegaspec()
+```
+
+
+2nd Graph
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Comparing Kits", "anchor": "start", "fontSize": 18},
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/twins-genetics-long.json"
+  },
+  "facet": {
+    "field": "twin",
+    "type": "nominal",
+    "title": null,
+    "columns": 6,
+    "sort": ["1A","1B","2A","2B","3A","3B","4A","4B","5A","5B","6A","6B"]
+  },
+  "spec": {
+    "width": 100,
+    "height": 300,
+    "mark": {"type": "bar", "stroke": null},
+    "encoding": {
+      "x": {
+        "field": "kit",
+        "type": "nominal",
+        "title": "DNA Testing Company",
+        "sort": ["23andMe", "Ancestry", "MyHeritage"],
+        "axis": {"labelAngle": -30}
+      },
+      "y": {
+        "field": "genetic share",
+        "type": "quantitative",
+        "title": "Ancestry Percentage",
+        "scale": {"domain": [0, 1]},
+        "axis": {"format": "%"}
+      },
+      "xOffset": {
+        "field": "region",
+        "type": "nominal"
+      },
+      "color": {
+        "field": "region",
+        "type": "nominal",
+        "title": "Region",
+        "scale": {
+          "domain": ["Central Africa", "East Asia", "NW Europe", "SE Europe", "West Africa"],
+          "range": ["#4e79a7", "#f28e2b", "#59a14f", "#e15759", "#b07aa1"]
+        }
+      },
+      "tooltip": [
+        {"field": "twin", "type": "nominal", "title": "Twin"},
+        {"field": "kit", "type": "nominal", "title": "Kit"},
+        {"field": "region", "type": "nominal", "title": "Region"},
+        {"field": "genetic share", "type": "quantitative", "format": ".1%", "title": "Share"}
+      ]
+    }
+  }
+}
+' |> as_vegaspec()
+```
+
+d.
+Paragraph for Graph 1
+
+When we compare similarities in twins, twins share the same DNA, so we would expect their results to show similarities. Different companies would produce differing results so I resulted to compare the twins based on each company used. In this way we are given results to compare pending on which company you want to use, 23 and me or ancestry. What was intended was to compare the bars for Twin A and Twin B within each region which have similarities regardless of which DNA kit is selected, but in our results we see that the twins themselves are not the source of variation in these results.
+
+Paragraph for Graph 2
+
+This time we attempt to explicitly compare the kits across companies and with each other.
+And as said before while the twins may agree with each other, the three DNA testing companies do not always agree with themselves. Looking across each twin's facet, the bars for 23andMe, Ancestry, and MyHeritage frequently tell different stories for the same person. Ancestry tends to report more extreme values, pushing dominant regions higher and minor regions lower, while 23andMe and MyHeritage often report a more distributed breakdown. 
+
+
+Excercise 2
+
+Challenge#3: Net promoter Score
+
+Comparison to other businesses
+
+Over time the business Net Promoter Score shows a gradual improvement compared to its competitors. Eventhough some competitors still remain relatively stable our score trends upward, indicating stronger growth in customer satisfaction. In February 2020, the business NPS is among the higher scores compared to others this directly suggest we are performing competitively within the market.
+
+Changes in NPS components
+
+The increase in our Net Promoter Score over time is driven by a rise in the percentage of promoters and a decrease in detractors. This surely indicates that more customers are becoming highly satisfied with our business and fewer customers are dissatisfied. The percentage of passive customers remains relatively stable which directly suggest that most of the improvement comes from converting detractors into promoters.
+
+
+Exercise 3
+a.
+
+```{r}
+'
+[
+  {"year": 2015, "year_label": "2015-2016", "fertility_rate": 5.2, "contraception_use": 38.4, "unmet_need": 22.1},
+  {"year": 2010, "year_label": "2010",      "fertility_rate": 5.4, "contraception_use": 23.6, "unmet_need": 22.3},
+  {"year": 2004, "year_label": "2004-2005", "fertility_rate": 5.7, "contraception_use": 17.6, "unmet_need": 24.3},
+  {"year": 1999, "year_label": "1999",      "fertility_rate": 5.6, "contraception_use": 15.6, "unmet_need": 22.3},
+  {"year": 1996, "year_label": "1996",      "fertility_rate": 5.8, "contraception_use": 11.7, "unmet_need": 26.0},
+  {"year": 1991, "year_label": "1991-1992", "fertility_rate": 6.2, "contraception_use": 5.9,  "unmet_need": 27.8}
+]
+' |> as_vegaspec()
+```
+
+b.
+
+```{r}
+
+my_spec <- list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  title = list(
+    text = "Family Planning Trends in Tanzania (1991–2015)",
+    subtitle = "Source: Demographic and Health Surveys, Various Years",
+    anchor = "start"
+  ),
+  data = list(values = list(
+    list(year=2015, year_label="2015-2016", fertility_rate=5.2, contraception_use=38.4, unmet_need=22.1),
+    list(year=2010, year_label="2010",      fertility_rate=5.4, contraception_use=23.6, unmet_need=22.3),
+    list(year=2004, year_label="2004-2005", fertility_rate=5.7, contraception_use=17.6, unmet_need=24.3),
+    list(year=1999, year_label="1999",      fertility_rate=5.6, contraception_use=15.6, unmet_need=22.3),
+    list(year=1996, year_label="1996",      fertility_rate=5.8, contraception_use=11.7, unmet_need=26.0),
+    list(year=1991, year_label="1991-1992", fertility_rate=6.2, contraception_use=5.9,  unmet_need=27.8)
+  )),
+  transform = list(
+    list(
+      fold = list("fertility_rate", "contraception_use", "unmet_need"),
+      as = list("indicator", "value")
+    ),
+    list(
+      calculate = "datum.indicator === 'fertility_rate' ? 'Total Fertility Rate' : datum.indicator === 'contraception_use' ? 'Contraception Use (%)' : 'Unmet Need for Family Planning (%)'",
+      as = "indicator_label"
+    )
+  ),
+  width = 500,
+  height = 300,
+  layer = list(
+    list(
+      mark = list(type="line", point=TRUE, strokeWidth=2.5),
+      encoding = list(
+        x = list(
+          field="year", type="quantitative",
+          title="Survey Year",
+          scale=list(domain=list(1989, 2017)),
+          axis=list(tickCount=6, format="d")
+        ),
+        y = list(
+          field="value", type="quantitative",
+          title="Value"
+        ),
+        color = list(
+          field="indicator_label", type="nominal",
+          title="Indicator",
+          scale=list(
+            domain=list("Total Fertility Rate", "Contraception Use (%)", "Unmet Need for Family Planning (%)"),
+            range=list("#e15759", "#4e79a7", "#f28e2b")
+          )
+        ),
+        tooltip = list(
+          list(field="year_label",     type="nominal",      title="Survey Year"),
+          list(field="indicator_label",type="nominal",      title="Indicator"),
+          list(field="value",          type="quantitative", format=".1f", title="Value")
+        )
+      )
+    )
+  )
+)
+
+my_spec |> as_vegaspec()
+```
+
+c.
+
+In Tanzania, contraception use increased sharply from 1991 to 2015 at the same time the total fertility rate gradually declined. I noticed unmet need for family planning generally decreased, though it fluctuated slightly in the middle years. Therefore the trends suggest improving access to family planning, leading to fewer births and better coverage of reproductive health services.
+ 
+ 
+Exercise 4
+a.
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "US Airport Traffic & Flight Routes (2008)",
+    "subtitle": "Click an airport to see its outbound routes. Size = number of departing flights.",
+    "anchor": "start",
+    "fontSize": 15,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#888"
+  },
+  "hconcat": [
+    {
+      "width": 520,
+      "height": 380,
+      "projection": {"type": "albersUsa"},
+      "layer": [
+        {
+          "data": {
+            "url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/us-10m.json",
+            "format": {"type": "topojson", "feature": "states"}
+          },
+          "mark": {"type": "geoshape", "fill": "#f0f0f0", "stroke": "#ffffff", "strokeWidth": 1}
+        },
+        {
+          "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/flights-airport.csv"},
+          "transform": [
+            {"aggregate": [{"op": "count", "as": "routes"}], "groupby": ["origin"]},
+            {
+              "lookup": "origin",
+              "from": {
+                "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/airports.csv"},
+                "key": "iata",
+                "fields": ["latitude", "longitude", "name", "city", "state"]
+              }
+            },
+            {"filter": "datum.latitude != null"}
+          ],
+          "params": [
+            {"name": "airport_select", "select": {"type": "point", "on": "click", "fields": ["origin"]}}
+          ],
+          "mark": {"type": "circle", "tooltip": true},
+          "encoding": {
+            "latitude":  {"field": "latitude",  "type": "quantitative"},
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "size": {
+              "field": "routes",
+              "type": "quantitative",
+              "title": "Outbound routes",
+              "scale": {"range": [10, 800]},
+              "legend": {
+                "orient": "bottom-right",
+                "titleFontSize": 10,
+                "labelFontSize": 10,
+                "tickCount": 4
+              }
+            },
+            "color": {
+              "condition": {"param": "airport_select", "value": "#e15759"},
+              "value": "#4e79a7"
+            },
+            "opacity": {
+              "condition": {"param": "airport_select", "value": 1},
+              "value": 0.6
+            },
+            "tooltip": [
+              {"field": "name",   "type": "nominal",      "title": "Airport"},
+              {"field": "city",   "type": "nominal",      "title": "City"},
+              {"field": "state",  "type": "nominal",      "title": "State"},
+              {"field": "origin", "type": "nominal",      "title": "IATA Code"},
+              {"field": "routes", "type": "quantitative", "title": "Outbound Routes"}
+            ]
+          }
+        },
+        {
+          "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/flights-airport.csv"},
+          "transform": [
+            {"filter": {"param": "airport_select", "empty": false}},
+            {
+              "lookup": "origin",
+              "from": {
+                "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/airports.csv"},
+                "key": "iata",
+                "fields": ["latitude", "longitude"]
+              },
+              "as": ["origin_lat", "origin_lon"]
+            },
+            {
+              "lookup": "destination",
+              "from": {
+                "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/airports.csv"},
+                "key": "iata",
+                "fields": ["latitude", "longitude"]
+              },
+              "as": ["dest_lat", "dest_lon"]
+            },
+            {"filter": "datum.origin_lat != null && datum.dest_lat != null"}
+          ],
+          "mark": {"type": "rule", "color": "#e15759", "opacity": 0.4, "strokeWidth": 1.2},
+          "encoding": {
+            "latitude":   {"field": "origin_lat", "type": "quantitative"},
+            "longitude":  {"field": "origin_lon", "type": "quantitative"},
+            "latitude2":  {"field": "dest_lat"},
+            "longitude2": {"field": "dest_lon"}
+          }
+        }
+      ]
+    },
+    {
+      "title": {"text": "Top 15 airports by outbound routes", "fontSize": 12, "anchor": "start"},
+      "width": 180,
+      "height": 380,
+      "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@latest/data/flights-airport.csv"},
+      "transform": [
+        {"aggregate": [{"op": "count", "as": "routes"}], "groupby": ["origin"]},
+        {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "routes", "order": "descending"}]},
+        {"filter": "datum.rank <= 15"}
+      ],
+      "mark": {"type": "bar", "tooltip": true},
+      "encoding": {
+        "y": {
+          "field": "origin", "type": "nominal",
+          "sort": "-x",
+          "axis": {"title": null, "labelFontSize": 11},
+          "scale": {"paddingInner": 0.2}
+        },
+        "x": {
+          "field": "routes", "type": "quantitative",
+          "axis": {"title": "Routes", "titleFontSize": 10, "labelFontSize": 10, "tickCount": 4},
+          "scale": {"nice": true}
+        },
+        "color": {
+          "condition": {"param": "airport_select", "value": "#e15759"},
+          "value": "#4e79a7"
+        },
+        "opacity": {
+          "condition": {"param": "airport_select", "value": 1.0},
+          "value": 0.75
+        },
+        "tooltip": [
+          {"field": "origin", "type": "nominal",      "title": "IATA"},
+          {"field": "routes", "type": "quantitative", "title": "Outbound Routes"}
+        ]
+      }
+    }
+  ],
+  "config": {"view": {"stroke": null}}
+}
+' |> as_vegaspec()
+```
+
+b. 
+
+My choice of graphic was a map as a primary view because the data was very much geographic, with airport position encoded spatially. I used the size of each mark to encode the route count on the airport circles. I used color and opacity to encode selection state so when you click an airport it turn red and fully opaque while others recede. Route lines appear only on click rather than all at once. I minimized used of multi colors to avoid it being termed as ugly. I made sure my graph told a story as first glance as people would be able to recognize the red dots on the big graph.
+
+c. 
+
+I got this my data set airports and flight-airport from the github page that had vega lite data sets. https://github.com/vega/vega-datasets/tree/main/data .
+
+Exercise 5
+
+a. Encoding channel other than x or y:- size, color, opacity
+b.Layers — three layers in the map: basemap, airport circles, route lines
+c.Facets — bar chart split into Hub vs Regional panels via facet
+d.Concatenation or repeat — hconcat joining map and bar chart
+e.Non-default scale or guide settings — size scale range: [10, 800]
+f.Tooltips — five-field tooltip on airport circles, three-field tooltip on bars
+g.Another kind of interaction — click selection (airport_select) that highlights the selected airport and filters the route lines layer
+
+Exercise 6
+
+a.
+- The first thing my graph has that isn't wasn't taught this semester is that it is a map. When I came across the airport dataset with longitude and latitude I thought it would be fun to try out a Map graph.
+
+- Second thing is due to the reason we may not have come across map we didn't explore route layering. I was able to add route lines when the a specific airport was clicked.
+
+b - Tufte highlited graphical excellence = clarity in communication. Which would also involve inducing the viewer. One thing my graph does really well is to lure at first site, the use of color red appeals to the users to attract them to map then when they look up they see title, which leads to a tip of understanding of the visualization. Chapter 1 page 1 of [Tufte page link](https://kyl.neocities.org/books/%5BTEC%20TUF%5D%20the%20visual%20display%20of%20quantitative%20information.pdf) 
+
+-Although I didn't use similar graphics chapter 6 of [Wilkes book](https://clauswilke.com/dataviz/visualizing-amounts.html#grouped-and-stacked-bars)  made me understand that not every plot can take any data set. When I came across my data set I saw that I had longitude and latitude as such this data set would be work well with a map. As simple as this information is during my plotting using a scatter plot was something I considered but with the help of the advice from Wilke I came to conclusion that the data set was perfect for a map.
+
+
+
+
+
+
+
+

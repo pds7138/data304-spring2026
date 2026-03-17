@@ -13,3 +13,6 @@ embed-resources: true
 
 [HW 8](hw8/)
 
+[Final Portfolio](final_portfolio/)
+
+

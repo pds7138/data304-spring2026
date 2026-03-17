@@ -1,6 +1,9 @@
 ---
 title: "HW7"
-format: html
+format:
+  html:
+    code-tools: true
+    code-fold: true
 output-file: "index"
 ---
 
